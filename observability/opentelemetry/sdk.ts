@@ -1,13 +1,13 @@
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { Resource } from '@opentelemetry/resources';
+import {
+  ConsoleMetricExporter,
+  PeriodicExportingMetricReader,
+} from '@opentelemetry/sdk-metrics';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
-import {
-  PeriodicExportingMetricReader,
-  ConsoleMetricExporter,
-} from '@opentelemetry/sdk-metrics';
-import { Resource } from '@opentelemetry/resources';
-import { OTEL_EXPORTER_HTTP_ENDPOINT, OTEL_SERVICE_NAME } from './config';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { OTEL_COLLECTOR_ENDPOINT, OTEL_SERVICE_NAME } from './config';
 
 export const sdk = new NodeSDK({
   resource: new Resource({
@@ -15,9 +15,11 @@ export const sdk = new NodeSDK({
   }),
   spanProcessors: [
     new SimpleSpanProcessor(new ConsoleSpanExporter()),
-    new SimpleSpanProcessor(new OTLPTraceExporter()),
+    new SimpleSpanProcessor(new OTLPTraceExporter({
+      url: `${OTEL_COLLECTOR_ENDPOINT}/v1/traces`,
+    })),
   ],
   metricReader: new PeriodicExportingMetricReader({
     exporter: new ConsoleMetricExporter(),
-  }),
+  })
 });
