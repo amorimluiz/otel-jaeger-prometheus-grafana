@@ -6,9 +6,19 @@ services:
       - ./collector-config.yml:/etc/collector-config.yml
     ports:
       - "4318:4318"
-    depends_on:
-      - jaeger
+      - "8889:8889"
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
       - "16686:16686"
+  prometheus:
+    image: prom/prometheus:latest
+    command: ["--config.file=/etc/prometheus/prometheus.yml"]
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
