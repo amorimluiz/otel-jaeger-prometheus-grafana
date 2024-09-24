@@ -10,6 +10,8 @@ exporters:
       insecure: true
   debug:
     verbosity: detailed
+  prometheus:
+    endpoint: 0.0.0.0:8889
 service:
   pipelines:
     traces:
@@ -17,7 +19,7 @@ service:
       exporters: [debug, otlp/jaeger]
     metrics:
       receivers: [otlp]
-      exporters: [debug]
+      exporters: [debug, prometheus]
     logs:
       receivers: [otlp]
       exporters: [debug]

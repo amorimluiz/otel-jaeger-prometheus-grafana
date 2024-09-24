@@ -7,7 +7,7 @@ sdk.start();
 
 const tracer = trace.getTracer(OTEL_SERVICE_NAME)
 
-const port = 3000
+const port = 3003
 
 const app = express()
 
