@@ -1,6 +1,6 @@
 import { trace } from '@opentelemetry/api'
 import express from 'express'
-import { OTEL_EXPORTER_HTTP_ENDPOINT, OTEL_SERVICE_NAME } from '../observability/opentelemetry/config';
+import { OTEL_SERVICE_NAME } from '../observability/opentelemetry/config';
 import { sdk } from '../observability/opentelemetry/sdk';
 
 sdk.start();
@@ -48,7 +48,6 @@ route.get('/products', (req: express.Request, res: express.Response) => {
     } finally {
       span.end()
     }
-    console.log(OTEL_EXPORTER_HTTP_ENDPOINT)
   })
 });
 
