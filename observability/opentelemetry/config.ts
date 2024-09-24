@@ -1,0 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+const OTEL_SERVICE_NAME = process.env.OTEL_SERVICE_NAME || 'products-nodejs';
+
+const OTEL_EXPORTER_GRPC_ENDPOINT = process.env.OTEL_EXPORTER_GRPC_ENDPOINT!;
+
+const OTEL_EXPORTER_HTTP_ENDPOINT = process.env.OTEL_EXPORTER_HTTP_ENDPOINT!;
+
+export {
+  OTEL_SERVICE_NAME,
+  OTEL_EXPORTER_GRPC_ENDPOINT,
+  OTEL_EXPORTER_HTTP_ENDPOINT,
+}
